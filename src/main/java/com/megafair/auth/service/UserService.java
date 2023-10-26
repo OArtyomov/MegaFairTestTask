@@ -1,8 +1,10 @@
 package com.megafair.auth.service;
 
+import com.megafair.auth.dao.GameDao;
 import com.megafair.auth.dao.PlatformDao;
 import com.megafair.auth.dao.PlatformGameDao;
 import com.megafair.auth.dao.UserDao;
+import com.megafair.auth.entity.Game;
 import com.megafair.auth.entity.Platform;
 import com.megafair.auth.entity.PlatformGame;
 import com.megafair.auth.entity.User;
@@ -39,12 +41,15 @@ public class UserService {
     @Inject
     SignatureService signatureService;
 
+    @Inject
+    GameDao gameDao;
+
     private static final Set<String> DEFAULT_USER_ROLE = singleton(USER_ROLE);
 
 
     @Transactional
     public String validateUser(String platformIdentifier,
-                               Long gameId,
+                               String gameSymbol,
                                String userIdentifier,
                                String userSignature) {
         //This logic can be devi
@@ -62,7 +67,13 @@ public class UserService {
         if (!user.getPlatformId().equals(platformId)) {
             throw new InvalidPlatformForUserException();
         }
-        PlatformGame platformGame = platformGameDao.findByPlatformIdAndGameId(platformId, gameId);
+
+        Game game = gameDao.findBySymbol(gameSymbol);
+        if (game == null) {
+            throw new InvalidGameForPlatformException();
+        }
+
+        PlatformGame platformGame = platformGameDao.findByPlatformIdAndGameId(platformId, game.getId());
         if (platformGame == null || !platformGame.getEnabled()) {
             throw new InvalidGameForPlatformException();
         }

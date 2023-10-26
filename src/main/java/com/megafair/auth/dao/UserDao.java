@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -29,6 +30,7 @@ public class UserDao {
         }
     }
 
+    @Transactional
     public void saveUser(User user) {
         entityManager.persist(user);
     }

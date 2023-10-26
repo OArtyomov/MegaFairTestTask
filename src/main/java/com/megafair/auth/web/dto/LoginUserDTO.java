@@ -19,7 +19,7 @@ public class LoginUserDTO {
     @NotBlank(message = "User signature may be not be blank")
     String userSignature;
 
-    @NotNull(message = "Game identifier may be not empty")
-    Long gameId;
+    @NotNull(message = "Game symbol may be not empty")
+    String gameSymbol;
 
 }

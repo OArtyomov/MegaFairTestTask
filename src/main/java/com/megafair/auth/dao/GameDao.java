@@ -1,6 +1,6 @@
 package com.megafair.auth.dao;
 
-import com.megafair.auth.entity.Platform;
+import com.megafair.auth.entity.Game;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
@@ -10,21 +10,22 @@ import lombok.experimental.FieldDefaults;
 
 @Singleton
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PlatformDao {
+public class GameDao {
 
-    private static final String FIND_PLATFORM_BY_IDENTIFIER_QUERY =
-            "select p from Platform p where p.identifier=?1";
+
     @Inject
     EntityManager entityManager;
 
-    public Platform finByIdentifier(String identifier) {
+    private static final String FIND_GAME_BY_SYMBOL_QUERY =
+            "select g from Game g where g.gameSymbol=?1";
+
+    public Game findBySymbol(String symbol) {
         try {
-            return (Platform) entityManager.createQuery(FIND_PLATFORM_BY_IDENTIFIER_QUERY)
-                    .setParameter(1, identifier)
+            return (Game) entityManager.createQuery(FIND_GAME_BY_SYMBOL_QUERY)
+                    .setParameter(1, symbol)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
     }
-
 }

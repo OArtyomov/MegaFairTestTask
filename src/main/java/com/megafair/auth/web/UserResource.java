@@ -1,8 +1,8 @@
 package com.megafair.auth.web;
 
+import com.megafair.auth.service.UserService;
 import com.megafair.auth.web.dto.AuthenticationResult;
 import com.megafair.auth.web.dto.LoginUserDTO;
-import com.megafair.auth.service.UserService;
 import com.megafair.auth.web.dto.RegisterResult;
 import com.megafair.auth.web.dto.RegisterUserDTO;
 import jakarta.annotation.security.PermitAll;
@@ -30,7 +30,7 @@ public class UserResource {
     @Consumes(APPLICATION_JSON)
     public AuthenticationResult login(@Valid LoginUserDTO loginUserDTO) {
         String token = userService.validateUser(loginUserDTO.getPlatformIdentifier(),
-                loginUserDTO.getGameId(),
+                loginUserDTO.getGameSymbol(),
                 loginUserDTO.getUserIdentifier(), loginUserDTO.getUserSignature());
         AuthenticationResult result = new AuthenticationResult();
         result.setToken(token);
