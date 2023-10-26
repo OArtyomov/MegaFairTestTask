@@ -10,7 +10,10 @@ create table game
 create table platform
 (
     id   serial constraint platform_pk primary key,
-    name varchar                                                not null
+    name varchar                                                not null,
+    identifier varchar not null
+    constraint platform_identifier_unique
+        unique
 );
 
 create table "user"

@@ -18,11 +18,9 @@ import lombok.experimental.FieldDefaults;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "userSequence")
-    @SequenceGenerator(name = "userSequence", sequenceName = "userSeq",
-            allocationSize = 1, initialValue = 10)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     Long id;
 
     @Column(name = "identifier")

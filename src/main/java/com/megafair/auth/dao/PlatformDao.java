@@ -1,27 +1,29 @@
 package com.megafair.auth.dao;
 
+import com.megafair.auth.entity.Platform;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import com.megafair.auth.entity.PlatformGame;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 @Singleton
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PlatformDao {
 
     @Inject
     EntityManager entityManager;
 
-    public PlatformGame findByPlatformIdAndGameId(Long platformId, Long gameId) {
+    public Platform finByIdentifier(String identifier) {
         try {
-            return (PlatformGame) entityManager.createQuery("select pg from PlatformGame pg where " +
-                            "pg.platformId=?1 and pg.gameId = ?2")
-                    .setParameter(1, platformId)
-                    .setParameter(2, gameId)
+            return (Platform) entityManager.createQuery("select p from Platform p where " +
+                            "p.identifier=?1")
+                    .setParameter(1, identifier)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
-        }    }
-
+        }
+    }
 
 }

@@ -3,6 +3,8 @@ package com.megafair.auth.web;
 import com.megafair.auth.web.dto.AuthenticationResult;
 import com.megafair.auth.web.dto.LoginUserDTO;
 import com.megafair.auth.service.UserService;
+import com.megafair.auth.web.dto.RegisterResult;
+import com.megafair.auth.web.dto.RegisterUserDTO;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -16,7 +18,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/user")
 @Singleton
-public class AuthenticationResource {
+public class UserResource {
 
     @Inject
     UserService userService;
@@ -27,7 +29,7 @@ public class AuthenticationResource {
     @Produces(APPLICATION_JSON)
     @Consumes(APPLICATION_JSON)
     public AuthenticationResult login(@Valid LoginUserDTO loginUserDTO) {
-        String token = userService.validateUser(loginUserDTO.getPlatformId(),
+        String token = userService.validateUser(loginUserDTO.getPlatformIdentifier(),
                 loginUserDTO.getGameId(),
                 loginUserDTO.getUserIdentifier(), loginUserDTO.getUserSignature());
         AuthenticationResult result = new AuthenticationResult();
@@ -36,4 +38,13 @@ public class AuthenticationResource {
         return result;
     }
 
+    @POST
+    @Path("register")
+    @PermitAll
+    @Produces(APPLICATION_JSON)
+    @Consumes(APPLICATION_JSON)
+    public RegisterResult register(@Valid RegisterUserDTO registerUserDTO) {
+        return userService.registerUser(registerUserDTO.getUserIdentifier(),
+                registerUserDTO.getPlatformIdentifier());
+    }
 }

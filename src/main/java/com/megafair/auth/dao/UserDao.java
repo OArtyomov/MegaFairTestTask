@@ -28,4 +28,8 @@ public class UserDao {
             return null;
         }
     }
+
+    public void saveUser(User user) {
+        entityManager.persist(user);
+    }
 }

@@ -14,4 +14,5 @@ public class Platform {
     @Id
     Long id;
     String name;
+    String identifier;
 }
