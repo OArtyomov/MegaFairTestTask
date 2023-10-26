@@ -17,7 +17,6 @@ public class UserDao {
     @Inject
     EntityManager entityManager;
 
-
     public User findUser(String userIdentifier, String userSignature) {
         try {
             return (User) entityManager.createQuery("select u from User u where " +
