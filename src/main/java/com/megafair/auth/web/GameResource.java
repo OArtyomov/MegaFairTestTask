@@ -10,8 +10,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import java.security.Principal;
-
 import static com.megafair.auth.utils.Constants.GAME_ID_CLAIM_NAME;
 import static com.megafair.auth.utils.Constants.PLATFORM_ID_CLAIM_NAME;
 import static com.megafair.auth.utils.Constants.USER_ID_CLAIM_NAME;

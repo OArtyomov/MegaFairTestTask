@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class LoginUserDTO {
 
     @NotNull(message = "Platform identifier may be not empty")
-    String  platformIdentifier;
+    String platformIdentifier;
 
     @NotBlank(message = "User identifier may not be blank")
     String userIdentifier;

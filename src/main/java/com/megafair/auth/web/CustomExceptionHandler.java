@@ -1,12 +1,12 @@
 package com.megafair.auth.web;
 
 import com.megafair.auth.exceptions.BaseServiceException;
+import com.megafair.auth.exceptions.InvalidGameForPlatformException;
 import com.megafair.auth.exceptions.InvalidPlatformForUserException;
 import com.megafair.auth.exceptions.UserNotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import com.megafair.auth.exceptions.InvalidGameForPlatformException;
 
 @Provider
 public class CustomExceptionHandler implements ExceptionMapper<BaseServiceException> {
