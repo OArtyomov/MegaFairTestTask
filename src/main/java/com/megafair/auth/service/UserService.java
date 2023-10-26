@@ -8,9 +8,9 @@ import com.megafair.auth.entity.Game;
 import com.megafair.auth.entity.Platform;
 import com.megafair.auth.entity.PlatformGame;
 import com.megafair.auth.entity.User;
+import com.megafair.auth.exceptions.EntityNotFoundException;
 import com.megafair.auth.exceptions.InvalidGameForPlatformException;
 import com.megafair.auth.exceptions.InvalidPlatformForUserException;
-import com.megafair.auth.exceptions.UserNotFoundException;
 import com.megafair.auth.web.dto.RegisterResult;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.inject.Inject;
@@ -55,13 +55,12 @@ public class UserService {
         //This logic can be devi
         User user = userDao.findUser(userIdentifier, userSignature);
         if (user == null) {
-            throw new UserNotFoundException();
+            throw new EntityNotFoundException("User is not found");
         }
 
         Platform platform = platformDao.finByIdentifier(platformIdentifier);
         if (platform == null) {
-            throw new InvalidPlatformForUserException();
-
+            throw new EntityNotFoundException("Platform is not found");
         }
         Long platformId = platform.getId();
         if (!user.getPlatformId().equals(platformId)) {
@@ -70,7 +69,7 @@ public class UserService {
 
         Game game = gameDao.findBySymbol(gameSymbol);
         if (game == null) {
-            throw new InvalidGameForPlatformException();
+            throw new EntityNotFoundException("Game is not found");
         }
 
         PlatformGame platformGame = platformGameDao.findByPlatformIdAndGameId(platformId, game.getId());
