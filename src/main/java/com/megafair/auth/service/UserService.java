@@ -20,8 +20,11 @@ import jakarta.transaction.Transactional;
 import java.util.Set;
 
 import static com.megafair.auth.utils.Constants.GAME_ID_CLAIM_NAME;
+import static com.megafair.auth.utils.Constants.GAME_IS_NOT_FOUND;
 import static com.megafair.auth.utils.Constants.PLATFORM_ID_CLAIM_NAME;
+import static com.megafair.auth.utils.Constants.PLATFORM_IS_NOT_FOUND;
 import static com.megafair.auth.utils.Constants.USER_ID_CLAIM_NAME;
+import static com.megafair.auth.utils.Constants.USER_IS_NOT_FOUND;
 import static com.megafair.auth.utils.Constants.USER_ROLE;
 import static java.util.Collections.singleton;
 
@@ -55,12 +58,12 @@ public class UserService {
         //This logic can be devi
         User user = userDao.findUser(userIdentifier, userSignature);
         if (user == null) {
-            throw new EntityNotFoundException("User is not found");
+            throw new EntityNotFoundException(USER_IS_NOT_FOUND);
         }
 
         Platform platform = platformDao.finByIdentifier(platformIdentifier);
         if (platform == null) {
-            throw new EntityNotFoundException("Platform is not found");
+            throw new EntityNotFoundException(PLATFORM_IS_NOT_FOUND);
         }
         Long platformId = platform.getId();
         if (!user.getPlatformId().equals(platformId)) {
@@ -69,7 +72,7 @@ public class UserService {
 
         Game game = gameDao.findBySymbol(gameSymbol);
         if (game == null) {
-            throw new EntityNotFoundException("Game is not found");
+            throw new EntityNotFoundException(GAME_IS_NOT_FOUND);
         }
 
         PlatformGame platformGame = platformGameDao.findByPlatformIdAndGameId(platformId, game.getId());
